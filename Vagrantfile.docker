@@ -1,0 +1,29 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.define "mgmt" do |mgdock|
+    mgdock.vm.hostname = "mgmt"
+    mgdock.vm.network :private_network, ip: "192.168.56.10", netmask: "24"
+
+    mgdock.vm.provider :docker do |docker, override|
+      override.vm.box = nil
+      docker.image = "rofrano/vagrant-provider:ubuntu"
+      docker.remains_running = true
+      docker.has_ssh = true
+      docker.privileged = true
+      docker.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:rw"]
+      docker.create_args = ["--cgroupns=host"]
+      # Uncomment to force arm64 for testing images on Intel
+      # docker.create_args = ["--platform=linux/arm64"]     
+    end
+
+    mgdock.vm.synced_folder "gcp/", "/home/vagrant/gcp/", docker_consistency: "cached"
+    mgdock.vm.synced_folder "backend/", "/home/vagrant/backend/", docker_consistency: "cached"
+    mgdock.vm.synced_folder "frontend/", "/home/vagrant/frontend/", docker_consistency: "cached"
+    # Provisioning
+    mgdock.vm.provision "docker"
+    mgdock.vm.provision "shell", inline: 'sudo apt-get update'
+    mgdock.vm.provision :shell, keep_color: true, path: "bootstrap-mgmt.sh"
+  end
+end

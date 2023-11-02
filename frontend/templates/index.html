@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Unit Converter</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        .box  {
+            display: flex;
+        }
+        
+        .push {
+            margin-left: auto;
+        }
+
+        .history {
+            display: flex;
+            justify-content: center;
+            width: 100%
+        }
+        
+        footer {
+            text-align: center;
+        }
+    </style>  
+</head>
+<body>
+	<main>
+        <h1>Unit Converter</h1>
+        <p>Always converting units by hand? Worry no more, this tool will save your precious time!</p>
+        <br><hr>
+
+        <div class="box">
+            <div>
+                <h2>Decimal to Binary</h2>
+                <form action="decimal2binary" method="post">
+                    <input type="number" min="0" required value="{{ decimal_input }}" name="decimal">
+                    <input type="submit" value="Convert">
+                </form>
+                <p><strong>Binary:</strong> {{ binary_output }}</p>
+            </div>
+            
+            <div class="push">
+                <h2>Binary to Decimal</h2>
+                <form action="binary2decimal" method="post">
+                    <input inputmode="numeric" pattern="[0-1]*" required value="{{ binary_input }}" name="binary">
+                    <input type="submit" value="Convert">
+                </form>
+                <p><strong>Decimal:</strong> {{ decimal_output }}</p>
+            </div>
+        </div>
+
+        <br><hr>
+
+        <div class="box">
+            <div>
+                <h2>Celsius to Fahrenheit</h2>
+                <form action="celsius2fahrenheit" method="post">
+                    <input type="number" required value="{{ celsius_input }}" step="0.001" name="celsius">
+                    <input type="submit" value="Convert">
+                </form>
+                <p><strong>Fahrenheit Degrees:</strong> {{ fahrenheit_output }}˚F</p>
+            </div>
+            
+            <div class="push">
+                <h2>Fahrenheit to Celsius</h2>
+                <form action="fahrenheit2celsius" method="post">
+                    <input type="number" required value="{{ fahrenheit_input }}" step="0.001" name="fahrenheit">
+                    <input type="submit" value="Convert">
+                </form>
+                <p><strong>Celsius Degrees:</strong> {{ celsius_output }}˚C</p>
+            </div>
+        </div>
+
+        <br><hr>
+
+        <div class="box">
+            <div class="history">
+                <button type="button" onclick="window.open('view_history?uid={{ uid }}'); return false;">View History</button>
+            </div>
+        </div>
+	</main>
+	<footer>
+        <p>Project assignment for  the AGI 2023/2024 course, MEIC-A @ Instituto Superior Técnico</p>
+		<p>2023 &copy Carlos Vaz, Inês Pissarra and Joana Silva</p>
+	</footer>
+</body>
+</html>

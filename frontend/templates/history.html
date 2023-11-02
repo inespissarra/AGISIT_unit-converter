@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>History of Operations</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        .box  {
+            display: flex;
+        }
+        
+        .push {
+            margin-left: auto;
+        }
+
+        .history {
+            display: flex;
+            justify-content: center;
+            width: 100%
+        }
+        
+        footer {
+            text-align: center;
+        }
+
+        table, th, td {
+            border: 1px solid #dbdbdb;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <table id="table">
+            <tr>
+                <th style="width: 220px;">Timestamp</th>
+                <th style="width: 150px;">Operation</th>   
+                <th style="width: 110px;">Input Value</th>
+                <th style="width: 110px;">Input Unit</th>
+                <th style="width: 110px;">Output Value</th>
+                <th style="width: 110px;">Output Unit</th>
+            </tr>
+            {% if data_dict %}
+            {% for record in data_dict.values() %}
+             <tr>
+                <td>{{record["timestamp"]}}</td>
+                <td>{{record["op"]}}</td>
+                <td>{{record["input_value"]}}</td>
+                <td>{{record["input_unit"]}}</td>
+                <td>{{record["output_value"]}}</td>
+                <td>{{record["output_unit"]}}</td>
+             </tr>
+             {% endfor %}
+            {% endif %}
+        </table>
+    </main>
+</body>
+</html>
